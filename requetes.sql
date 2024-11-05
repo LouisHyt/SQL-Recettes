@@ -42,13 +42,13 @@ VALUES
 -- 5.3 On lie la recette et les ingrédients
 INSERT INTO recipe_composition 
 VALUES
-(1, (SELECT id_recipe FROM recipe WHERE recipe_name = 'pâtes à la carbonara'), (SELECT id_ingredient FROM ingredient WHERE ingredient_name = 'oignon rouge'), "entier"),
-(250, (SELECT id_recipe FROM recipe WHERE recipe_name = 'pâtes à la carbonara'), (SELECT id_ingredient FROM ingredient WHERE ingredient_name = 'lardons'), "g"),
-(500, (SELECT id_recipe FROM recipe WHERE recipe_name = 'pâtes à la carbonara'), (SELECT id_ingredient FROM ingredient WHERE ingredient_name = 'pâtes'), "g"),
-(1, (SELECT id_recipe FROM recipe WHERE recipe_name = 'pâtes à la carbonara'), (SELECT id_ingredient FROM ingredient WHERE ingredient_name = 'poivre'), "pincée"),
-(1, (SELECT id_recipe FROM recipe WHERE recipe_name = 'pâtes à la carbonara'), (SELECT id_ingredient FROM ingredient WHERE ingredient_name = 'sel'), "pincée"),
-(50, (SELECT id_recipe FROM recipe WHERE recipe_name = 'pâtes à la carbonara'), (SELECT id_ingredient FROM ingredient WHERE ingredient_name = 'crême fraiche'), "cl"),
-(1, (SELECT id_recipe FROM recipe WHERE recipe_name = 'pâtes à la carbonara'), (SELECT id_ingredient FROM ingredient WHERE ingredient_name = 'oeuf'), "entier")
+(1, 12, 21, "entier"),
+(250, 12, 31, "g"),
+(500, 12, 30, "g"),
+(1, 12, 19, "pincée"),
+(1, 12, 13, "pincée"),
+(50, 12, 32, "cl"),
+(1, 12, 6, "entier")
 
 
 -- 6
@@ -75,7 +75,7 @@ INNER JOIN ingredient ing
 ON ing.id_ingredient = rc.id_ingredient
 WHERE id_recipe = 5
 
---10
+-- 10 (L'unité de mesure est gérée dans une table associative, je ne l'ajoute pas directement dans la table ingrédient)
 INSERT INTO ingredient (ingredient_name, price)
 VALUES
 ("poivre", 2.5),
