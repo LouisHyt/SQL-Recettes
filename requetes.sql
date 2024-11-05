@@ -36,7 +36,12 @@ VALUES
 -- 5.3
 INSERT INTO recipe_composition VALUES
 (1, (SELECT id_recipe FROM recipe WHERE recipe_name = 'pâtes à la carbonara'), (SELECT id_ingredient FROM ingredient WHERE ingredient_name = 'oignon rouge'), "entier"),
-(250, (SELECT id_recipe FROM recipe WHERE recipe_name = 'pâtes à la carbonara'), (SELECT id_ingredient FROM ingredient WHERE ingredient_name = 'lardons'), "g")
+(250, (SELECT id_recipe FROM recipe WHERE recipe_name = 'pâtes à la carbonara'), (SELECT id_ingredient FROM ingredient WHERE ingredient_name = 'lardons'), "g"),
+(500, (SELECT id_recipe FROM recipe WHERE recipe_name = 'pâtes à la carbonara'), (SELECT id_ingredient FROM ingredient WHERE ingredient_name = 'pâtes'), "g"),
+(1, (SELECT id_recipe FROM recipe WHERE recipe_name = 'pâtes à la carbonara'), (SELECT id_ingredient FROM ingredient WHERE ingredient_name = 'poivre'), "pincée"),
+(1, (SELECT id_recipe FROM recipe WHERE recipe_name = 'pâtes à la carbonara'), (SELECT id_ingredient FROM ingredient WHERE ingredient_name = 'sel'), "pincée"),
+(50, (SELECT id_recipe FROM recipe WHERE recipe_name = 'pâtes à la carbonara'), (SELECT id_ingredient FROM ingredient WHERE ingredient_name = 'crême fraiche'), "cl"),
+(1, (SELECT id_recipe FROM recipe WHERE recipe_name = 'pâtes à la carbonara'), (SELECT id_ingredient FROM ingredient WHERE ingredient_name = 'oeuf'), "entier")
 
 
 -- 6
