@@ -16,10 +16,27 @@ GROUP BY r.id_recipe
 ORDER BY r.prep_time DESC
 
 -- 3
-SELECT * FROM recipe WHERE prep_time < 30
+SELECT recipe_name, prep_time FROM recipe WHERE prep_time < 30 ORDER BY prep_time DESC
 
---4
-SELECT * FROM recipe WHERE 
+-- 4
+SELECT recipe_name, prep_time, instructions FROM recipe WHERE recipe_name LIKE '%salade%'
 
---5
-SELECT * FROM recipe WHERE recipe_name LIKE '%salade%'
+-- 5
+INSERT INTO recipe (recipe_name, prep_time, instructions, id_category) 
+VALUES 
+("pâtes à la carbonara", 20, "Faites cuir des pâtes. Faites griller des lardons. Verser de la crème fraiche ainsi que des jaunes d'oeufs dans votre casserole. Mélanger le tout et assaisonnez", (SELECT id_category FROM category WHERE category_name = 'dish'))
+
+-- 5.2
+INSERT INTO ingredient (ingredient_name, price)
+VALUES
+("pâtes", 1.45),
+("lardons", 1.88),
+("crême fraiche", 2.10)
+
+-- 5.3
+INSERT INTO recipe_composition VALUES
+(1, (SELECT id_recipe FROM recipe WHERE recipe_name = 'pâtes à la carbonara'), (SELECT id_ingredient FROM ingredient WHERE ingredient_name = 'oignon rouge'), "entier"),
+(250, (SELECT id_recipe FROM recipe WHERE recipe_name = 'pâtes à la carbonara'), (SELECT id_ingredient FROM ingredient WHERE ingredient_name = 'lardons'), "g")
+
+
+-- 6
