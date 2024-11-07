@@ -119,6 +119,14 @@ UPDATE recipe
 SET prep_time = prep_time - 5
 
 -- 15
+SELECT r.recipe_name, r.prep_time, r.instructions
+FROM recipe r
+INNER JOIN recipe_composition rc
+ON r.id_recipe = rc.id_recipe
+INNER JOIN ingredient ing
+ON rc.id_ingredient = ing.id_ingredient
+GROUP BY r.id_recipe
+HAVING MAX(ing.price) < 2
 
 
 -- 16: Affiche Les 5 recettes les plus rapides à préparer
