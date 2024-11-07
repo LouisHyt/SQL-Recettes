@@ -92,14 +92,14 @@ INNER JOIN category ct
 ON r.id_category = ct.id_category
 GROUP BY ct.id_category
 
--- 12 / Afficher toutes les catégories même celles à 0
+-- 12: Afficher toutes les catégories même celles à 0
 SELECT c.category_name, COUNT(r.id_recipe) AS recipe_count
 FROM category c
 LEFT JOIN recipe r
 ON c.id_category = r.id_category
 GROUP BY c.id_category
 
--- 12 / Afficher uniquement les catégories dont aucune recette n'y est rattaché
+-- 12: Afficher uniquement les catégories dont aucune recette n'y est rattaché
 SELECT c.category_name
 FROM category c
 LEFT JOIN recipe r
@@ -119,13 +119,54 @@ UPDATE recipe
 SET prep_time = prep_time - 5
 
 -- 15
+
+
+-- 16: Affiche Les 5 recettes les plus rapides à préparer
 SELECT recipe_name, prep_time, instructions
+FROM recipe
+ORDER BY prep_time ASC
+LIMIT 5
+
+-- 17
+SELECT r.recipe_name, r.prep_time, r.instructions
+FROM recipe r
+LEFT JOIN recipe_composition rc 
+ON rc.id_recipe = r.id_recipe
+WHERE rc.id_recipe IS NULL
+
+-- 18
+SELECT ing.ingredient_name, COUNT(rc.id_ingredient) AS recipe_count
+FROM recipe_composition rc
+INNER JOIN ingredient ing
+ON rc.id_ingredient = ing.id_ingredient
+GROUP BY rc.id_ingredient
+HAVING COUNT(rc.id_ingredient) >= 3
+
+-- 19
+INSERT INTO ingredient
+VALUES ("sauce soja", 2.36)
+
+INSERT INTO recipe_composition
+VALUES (50, 2, (SELECT id_ingredient FROM ingredient WHERE ingredient_name =  "sauce soja"), 'ml')
+
+-- 20
+SELECT r.recipe_name, ROUND(SUM(ing.price), 2) AS total_price
 FROM recipe r
 INNER JOIN recipe_composition rc
 ON r.id_recipe = rc.id_recipe
-WHERE rc.price = (SELECT id_ingredient FROM ingredient WHERE ingredient_name = "beurre")
+INNER JOIN ingredient ing
+ON rc.id_ingredient = ing.id_ingredient
+GROUP BY r.id_recipe
+HAVING total_price >= ALL(
+	SELECT ROUND(SUM(ing.price), 2) AS total_price
+	FROM recipe r
+	INNER JOIN recipe_composition rc
+	ON r.id_recipe = rc.id_recipe
+	INNER JOIN ingredient ing
+	ON rc.id_ingredient = ing.id_ingredient
+	GROUP BY r.id_recipe
+)
 
--- 16
 
 
 
