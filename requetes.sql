@@ -81,4 +81,51 @@ VALUES
 ("poivre", 2.5),
 
 -- 11
+UPDATE ingredient 
+SET price = 8.50 
+WHERE ingredient_name = 'rhum'
+
+-- 12
+SELECT ct.category_name, COUNT(r.id_recipe) AS recipe_count
+FROM recipe r
+INNER JOIN category ct
+ON r.id_category = ct.id_category
+GROUP BY ct.id_category
+
+-- 12 / Afficher toutes les catégories même celles à 0
+SELECT c.category_name, COUNT(r.id_recipe) AS recipe_count
+FROM category c
+LEFT JOIN recipe r
+ON c.id_category = r.id_category
+GROUP BY c.id_category
+
+-- 12 / Afficher uniquement les catégories dont aucune recette n'y est rattaché
+SELECT c.category_name
+FROM category c
+LEFT JOIN recipe r
+ON c.id_category = r.id_category
+WHERE r.id_category IS NULL
+GROUP BY c.id_category
+
+-- 13
+SELECT recipe_name, prep_time, instructions
+FROM recipe r
+INNER JOIN recipe_composition rc
+ON r.id_recipe = rc.id_recipe
+WHERE rc.id_ingredient = (SELECT id_ingredient FROM ingredient WHERE ingredient_name = "beurre")
+
+-- 14
+UPDATE recipe 
+SET prep_time = prep_time - 5
+
+-- 15
+SELECT recipe_name, prep_time, instructions
+FROM recipe r
+INNER JOIN recipe_composition rc
+ON r.id_recipe = rc.id_recipe
+WHERE rc.price = (SELECT id_ingredient FROM ingredient WHERE ingredient_name = "beurre")
+
+-- 16
+
+
 
